@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Retos Familiares - Diversión y Recuerdos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Selector de Modo -->
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="retos">
+                😂 RETOS PARA MORIR DE RISA
+            </button>
+            <button class="mode-btn" data-mode="recuerdos">
+                ❤️ RETOS PARA CREAR RECUERDOS
+            </button>
+            <button class="mode-btn" data-mode="secretas">
+                🕵️ MISIONES SECRETAS
+            </button>
+        </div>
+
+        <!-- Pantalla Principal de Retos -->
+        <div class="screen active" id="retos-screen">
+            <div class="card-container">
+                <div class="challenge-card">
+                    <div class="challenge-content">
+                        <h1 id="challenge-title">¡PRESIONA EL BOTÓN!</h1>
+                        <p id="challenge-description">Presiona para generar un reto aleatorio</p>
+                    </div>
+                    <div class="timer-section">
+                        <div class="timer" id="timer">00:00</div>
+                        <p class="timer-label">Tiempo del reto</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-generate" onclick="generateChallenge('retos')">
+                    🎲 GENERAR RETO
+                </button>
+                <button class="btn btn-timer" onclick="toggleTimer()">
+                    ⏱️ INICIAR TEMPORIZADOR
+                </button>
+                <button class="btn btn-reset" onclick="resetChallenge()">
+                    🔄 NUEVA RONDA
+                </button>
+            </div>
+        </div>
+
+        <!-- Pantalla Principal de Recuerdos -->
+        <div class="screen" id="recuerdos-screen">
+            <div class="card-container">
+                <div class="challenge-card">
+                    <div class="challenge-content">
+                        <h1 id="recuerdos-title">¡PRESIONA EL BOTÓN!</h1>
+                        <p id="recuerdos-description">Presiona para un reto de recuerdos</p>
+                    </div>
+                    <div class="timer-section">
+                        <div class="timer" id="timer-recuerdos">00:00</div>
+                        <p class="timer-label">Tiempo para reflexionar</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-generate" onclick="generateChallenge('recuerdos')">
+                    💭 GENERAR RETO
+                </button>
+                <button class="btn btn-timer" onclick="toggleTimerRecuerdos()">
+                    ⏱️ INICIAR TEMPORIZADOR
+                </button>
+                <button class="btn btn-reset" onclick="resetChallenge('recuerdos')">
+                    🔄 NUEVA RONDA
+                </button>
+            </div>
+        </div>
+
+        <!-- Pantalla de Misiones Secretas -->
+        <div class="screen" id="secretas-screen">
+            <div class="card-container">
+                <div class="mission-card secret">
+                    <div class="secret-label">🔐 MISIÓN SECRETA</div>
+                    <div class="mission-content">
+                        <h1 id="mission-title">¡PRESIONA PARA REVELAR!</h1>
+                        <p id="mission-description">Tu misión aparecerá aquí</p>
+                    </div>
+                    <div class="secret-indicator">
+                        <span>SECRETO</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mission-counter">
+                <p>Jugador: <span id="current-player">1</span> de <span id="total-players">4</span></p>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-generate" onclick="generateMission()">
+                    🎯 ASIGNAR MISIÓN
+                </button>
+                <button class="btn btn-next" onclick="nextPlayer()">
+                    👤 SIGUIENTE JUGADOR
+                </button>
+                <button class="btn btn-reset" onclick="resetMissions()">
+                    🔄 REINICIAR MISIONES
+                </button>
+            </div>
+
+            <div class="players-setup">
+                <input type="number" id="player-count" min="2" max="10" value="4" placeholder="¿Cuántos jugadores?">
+                <button class="btn btn-small" onclick="setPlayerCount()">Establecer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para mostrar reglas -->
+    <div class="modal" id="rules-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Reglas</h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

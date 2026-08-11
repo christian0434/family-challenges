@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>😂 Random Joke Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1>😂 Joke Generator</h1>
+                <p>Get a random laugh every time!</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Joke Display Card -->
+            <div class="joke-card" id="jokeCard">
+                <div class="joke-icon">
+                    <i class="fas fa-laugh-beam"></i>
+                </div>
+                <div class="joke-content">
+                    <p id="jokeText" class="joke-text">Click the button to get a joke!</p>
+                    <p id="jokeType" class="joke-type">-- Waiting for a joke --</p>
+                </div>
+                <div class="joke-rating">
+                    <span class="rating-label">Rate this joke:</span>
+                    <div class="stars" id="ratingStars">
+                        <i class="far fa-star" onclick="rateJoke(1)"></i>
+                        <i class="far fa-star" onclick="rateJoke(2)"></i>
+                        <i class="far fa-star" onclick="rateJoke(3)"></i>
+                        <i class="far fa-star" onclick="rateJoke(4)"></i>
+                        <i class="far fa-star" onclick="rateJoke(5)"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div class="loading" id="loadingSpinner" style="display: none;">
+                <div class="spinner"></div>
+                <p>Finding a funny joke for you...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <p id="errorText">Oops! Something went wrong. Please try again.</p>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="controls">
+                <button class="btn btn-primary" onclick="getRandomJoke()">
+                    <i class="fas fa-laugh"></i> Get Random Joke
+                </button>
+                <button class="btn btn-secondary" onclick="toggleJokeType()">
+                    <i class="fas fa-filter"></i> <span id="typeFilter">All Types</span>
+                </button>
+                <button class="btn btn-tertiary" onclick="shareJoke()">
+                    <i class="fas fa-share-alt"></i> Share Joke
+                </button>
+                <button class="btn btn-quaternary" onclick="copyJoke()">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+
+            <!-- Filter Menu -->
+            <div class="filter-menu" id="filterMenu" style="display: none;">
+                <div class="filter-options">
+                    <button class="filter-btn active" onclick="filterJokes('all')">
+                        All Jokes
+                    </button>
+                    <button class="filter-btn" onclick="filterJokes('general')">
+                        General
+                    </button>
+                    <button class="filter-btn" onclick="filterJokes('programming')">
+                        Programming
+                    </button>
+                    <button class="filter-btn" onclick="filterJokes('knock-knock')">
+                        Knock-Knock
+                    </button>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-laugh-wink"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Jokes Loaded</p>
+                        <p class="stat-value" id="jokeCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Favorited</p>
+                        <p class="stat-value" id="favoriteCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Avg Rating</p>
+                        <p class="stat-value" id="avgRating">0.0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Shared</p>
+                        <p class="stat-value" id="shareCount">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Favorites Section -->
+            <div class="favorites-section">
+                <div class="favorites-header">
+                    <h3>❤️ Favorite Jokes</h3>
+                    <button class="btn-icon" onclick="clearFavorites()" title="Clear all favorites">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="favorites-list" id="favoritesList">
+                    <p class="empty-message">No favorites yet. Click the heart to save jokes!</p>
+                </div>
+            </div>
+
+            <!-- Joke History Section -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h3>📜 Recent Jokes</h3>
+                    <button class="btn-icon" onclick="clearHistory()" title="Clear history">
+                        <i class="fas fa-broom"></i>
+                    </button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <p class="empty-message">No jokes loaded yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <p id="toastMessage"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -54,7 +54,8 @@ const retosRisa = [
         title: "🔤 Abecedario Rápido",
         description: "Di el abecedario en menos de 10 segundos.",
         time: 10
-    }\n];
+    }
+];
 
 // Datos de Retos para Crear Recuerdos
 const retosRecuerdos = [
@@ -338,17 +339,55 @@ function resetMissions() {
     document.getElementById('mission-description').textContent = 'Tu misión aparecerá aquí';
 }
 
-// Sonido mejorado al terminar el temporizador
+// Sonido optimizado para teléfonos y navegadores
 function playNotification() {
+    // Primero intenta con Vibration API (funciona mejor en móviles)
+    if (navigator.vibrate) {
+        navigator.vibrate([100, 50, 100, 50, 150]); // Vibración: 100ms, pausa 50ms, etc.
+    }
+    
+    // Luego intenta con Web Audio API
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         
-        // Crear secuencia de sonidos para hacer un "ding ding ding"
+        // Crear secuencia de sonidos
         const now = audioContext.currentTime;
         
         // Primer tono (más agudo)
         playTone(audioContext, 800, now, 0.2, 0.3);
+        // Segundo tono (igual)
         playTone(audioContext, 800, now + 0.3, 0.2, 0.3);
+        // Tercer tono (más fuerte y grave)
         playTone(audioContext, 1000, now + 0.6, 0.3, 0.4);
         
-    } catch (error) {\n        console.log('Audio no disponible:', error);\n    }\n}\n\n// Función auxiliar para reproducir un tono\nfunction playTone(audioContext, frequency, startTime, duration, volume = 0.3) {\n    const oscillator = audioContext.createOscillator();\n    const gainNode = audioContext.createGain();\n    \n    oscillator.connect(gainNode);\n    gainNode.connect(audioContext.destination);\n    \n    oscillator.frequency.value = frequency;\n    oscillator.type = 'sine';\n    \n    gainNode.gain.setValueAtTime(volume, startTime);\n    gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);\n    \n    oscillator.start(startTime);\n    oscillator.stop(startTime + duration);\n}\n\nfunction closeModal() {\n    document.getElementById('rules-modal').classList.remove('show');\n}
+    } catch (error) {
+        console.log('Audio Web API no disponible');
+        // Si falla todo, al menos la vibración habrá funcionado
+    }
+}
+
+// Función auxiliar para reproducir un tono
+function playTone(audioContext, frequency, startTime, duration, volume = 0.3) {
+    try {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(volume, startTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+        
+        oscillator.start(startTime);
+        oscillator.stop(startTime + duration);
+    } catch (error) {
+        console.log('Error al reproducir tono');
+    }
+}
+
+function closeModal() {
+    document.getElementById('rules-modal').classList.remove('show');
+}
